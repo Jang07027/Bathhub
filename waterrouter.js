@@ -57,23 +57,6 @@ router.post('/refill', async (req, res) => {
   }
 });
 
-// 급수기 상태 조회 (GET /water/status)
-router.get('/status', async (req, res) => {
-  try {
-    // 아두이노로 상태 조회 요청
-    const response = await axios.get(`http://${ARDUINO_IP}:${ARDUINO_PORT}/status`);
-    res.json({
-      currentWaterLevel,
-      maxWaterCapacity: MAX_WATER_CAPACITY,
-      unit: 'liters',
-      arduinoStatus: response.data,
-    });
-  } catch (error) {
-    console.error('상태 조회 오류:', error.message);
-    res.status(500).json({ error: '상태 조회 요청에 실패했습니다.' });
-  }
-});
-
 // 급수기 초기화 (POST /water/reset)
 router.post('/reset', async (req, res) => {
   try {

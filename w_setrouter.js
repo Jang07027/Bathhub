@@ -48,21 +48,4 @@ router.get('/threshold', async (req, res) => {
   }
 });
 
-// 현재 상태 조회 (GET /water/status)
-router.get('/status', async (req, res) => {
-  try {
-    // 아두이노로 상태 조회 요청
-    const response = await axios.get(`http://${ARDUINO_IP}:${ARDUINO_PORT}/status`);
-    res.json({
-      currentWaterLevel: response.data.currentWaterLevel,
-      threshold: waterLevelThreshold,
-      unit: 'liters',
-      arduinoStatus: response.data,
-    });
-  } catch (error) {
-    console.error('상태 조회 오류:', error.message);
-    res.status(500).json({ error: '상태 조회 요청에 실패했습니다.' });
-  }
-});
-
 module.exports = router;
